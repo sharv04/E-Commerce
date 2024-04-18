@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product List</title>
+    <style>
+      body {
+        background-color: #f8f9fa; /* Set the background color to a light shade */
+        font-family: Arial, sans-serif; /* Set the font family for better readability */
+      }
+
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff; /* Set the background color of the container to white */
+        border-radius: 8px; /* Add some border radius for a softer look */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+      }
+
+      h1 {
+        margin-top: 0; /* Remove default margin from h1 */
+      }
+
+      .form-group {
+        margin-bottom: 15px; /* Add some space between form groups */
+      }
+
+      label {
+        display: block; /* Make labels block-level for better alignment */
+        font-weight: bold; /* Add some weight to labels for emphasis */
+      }
+
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc; /* Add a border to input fields for distinction */
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff; /* Set button background color */
+        color: #fff; /* Set button text color */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3; /* Darken button color on hover */
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px; /* Add some space between table and other elements */
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd; /* Add bottom border to table cells */
+        text-align: left;
+      }
+
+      /* Popup message styles */
+      .popupMessage {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Product List</h1>
+      <button id="addProductButton">Add Product</button>
+      <div id="addProductForm" style="display: none">
+        <h2>Add a New Product</h2>
+        <form id="productForm">
+          <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" required />
+          </div>
+          <div class="form-group">
+            <label for="price">Product Price:</label>
+            <input type="number" id="price" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Product Description:</label>
+            <textarea id="description" required></textarea>
+          </div>
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+      <table id="productTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="productList">
+          <!-- Product rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Popup message div -->
+    <div id="popupMessage" class="popupMessage">
+      Product added successfully.
+    </div>
+
+    <script>
+      // JavaScript code to show/hide the add product form
+      const addProductButton = document.getElementById("addProductButton");
+      const addProductForm = document.getElementById("addProductForm");
+
+      addProductButton.addEventListener("click", function () {
+        if (addProductForm.style.display === "none") {
+          addProductForm.style.display = "block";
+        } else {
+          addProductForm.style.display = "none";
+        }
+      });
+
+      // JavaScript code to handle the form submission
+      const productForm = document.getElementById("productForm");
+
+      productForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const price = parseFloat(document.getElementById("price").value);
+        const description = document.getElementById("description").value;
+
+        const newProduct = {
+          name: name,
+          price: price,
+          description: description,
+        };
+
+        fetch("/add_product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newProduct),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Product added successfully:", data);
+            document.getElementById("popupMessage").style.display = "block";
+            setTimeout(() => {
+              location.reload();
+            }, 2000); // Reload page after 2 seconds
+          })
+          .catch((error) => {
+            console.error("Failed to add the product:", error);
+          });
+      });
+    </script>
+  </body>
+</html>

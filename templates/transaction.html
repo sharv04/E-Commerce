@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Transactions</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+
+    .cart-heading{
+      color: #111;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      text-align: center;
+    }
+      /* CSS styles for the table */
+      table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #155e75;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #ffd6d6;
+        color: #111;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      .yellow-text {
+        color: #111;
+      }
+
+      .backBtn {
+      max-width: 100px;
+      display: block;
+      text-align: center;
+      padding: 10px 15px;
+      margin: auto;
+      margin-top: 20px;
+      border: 1px solid #155e75;
+      text-decoration: none;
+      cursor: pointer;
+      color: #111;
+      font-weight: 600;
+      border-radius: 10px;
+    }
+
+    .backBtn:hover {
+      background-color: #155e75;
+      color: white;
+    }
+
+    footer {
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <section class="navbar">
+          <div class="logo">
+            <img src="../static/img/logo.png " alt="logo" width="125px" />
+          </div>
+          <nav>
+           <ul class="nav-links">
+            <li><a class="active" href="/?user_id={{ user_id }}">Home</a></li>
+            <li><a href="/aboutus?user_id={{ user_id }}">About Us</a></li>
+            <li><a href="/contact?user_id={{ user_id }}">Contact Us</a></li>
+            {% if not user_id %}
+            <li><a href="/signin">Log In</a></li>
+            <li><a href="/signup">Register</a></li>
+            {% else %}
+            <li><a href="/carts?user_id={{ user_id }}">Cart</a></li>
+            <li><a href="/transaction?user_id={{ user_id }}">Transactions</a></li>
+            <li><a href="/profile?user_id={{ user_id }}">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
+          </ul>
+          </nav>
+  
+          <form id="search-form">
+            <input type="text" id="search" name="search" placeholder="Search for products" required />
+            <button type="submit">Search</button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <h1 class="cart-heading">User Transactions</h1>
+
+    <div id="transactions">
+      <!-- Transaction data will be dynamically added here -->
+    </div>
+
+    <a
+      href="/?user_id={{ user_id }}" class="backBtn"
+      >Back</a
+    >
+
+    <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <hr class="footer-line" />
+      <p>Made with ❤️ Pranay Bhandekar © 2024 Red Store</p>
+    </div>
+  </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const userId = getUserIdFromUrl(); // Get user ID from URL params
+
+        // Fetch user transactions from the server
+        async function fetchTransactions(userId) {
+          try {
+            const response = await fetch(`/transactions?user_id=${userId}`);
+            if (!response.ok) {
+              throw new Error("Failed to fetch user transactions.");
+            }
+            const data = await response.json();
+            return data.transactions;
+          } catch (error) {
+            console.error("Error:", error);
+            return [];
+          }
+        }
+
+        // Function to display user transactions in the UI
+        function displayTransactions(transactions) {
+          const transactionsContainer = document.getElementById("transactions");
+
+          // Create table element
+          const table = document.createElement("table");
+
+          // Create table header
+          const headerRow = document.createElement("tr");
+          const headers = [
+            "Transaction ID",
+            "Product Name",
+            "Amount",
+            "Description",
+          ];
+          headers.forEach((headerText) => {
+            const th = document.createElement("th");
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+          });
+          table.appendChild(headerRow);
+
+          // Create table body
+          transactions.forEach((transaction) => {
+            transaction.products.forEach((product) => {
+              const row = document.createElement("tr");
+
+              // Transaction ID
+              const transactionIdCell = document.createElement("td");
+              transactionIdCell.textContent = transaction._id;
+              transactionIdCell.classList.add("yellow-text"); // Apply yellow color to cell text
+              row.appendChild(transactionIdCell);
+
+              // Product Name
+              const productNameCell = document.createElement("td");
+              productNameCell.textContent = product.name;
+              productNameCell.classList.add("yellow-text"); // Apply yellow color to cell text
+              row.appendChild(productNameCell);
+
+              // Amount
+              const amountCell = document.createElement("td");
+              amountCell.textContent = `$${product.price}`;
+              amountCell.classList.add("yellow-text"); // Apply yellow color to cell text
+              row.appendChild(amountCell);
+
+              // Description
+              const descriptionCell = document.createElement("td");
+              descriptionCell.textContent = product.description;
+              descriptionCell.classList.add("yellow-text"); // Apply yellow color to cell text
+              row.appendChild(descriptionCell);
+
+              // Append the row to the table body
+              table.appendChild(row);
+            });
+          });
+
+          // Append the table to the transactions container
+          transactionsContainer.appendChild(table);
+        }
+
+        // Function to get user ID from URL parameters
+        function getUserIdFromUrl() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get("user_id");
+        }
+
+        // Fetch user transactions and display them
+        fetchTransactions(userId)
+          .then((transactions) => {
+            displayTransactions(transactions);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>

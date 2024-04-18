@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Store</title>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body class="body">
+  <div class="header">
+    <div class="container">
+      <section class="navbar">
+        <div class="logo">
+          <img src="../static/img/logo.png " alt="logo" width="125px" />
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a class="active" href="/?user_id={{ user_id }}">Home</a></li>
+            <li><a href="/aboutus?user_id={{ user_id }}">About Us</a></li>
+            <li><a href="/contact?user_id={{ user_id }}">Contact Us</a></li>
+            {% if not user_id %}
+            <li><a href="/signin">Log In</a></li>
+            <li><a href="/signup">Register</a></li>
+            {% else %}
+            <li><a href="/carts?user_id={{ user_id }}">Cart</a></li>
+            <li><a href="/transaction?user_id={{ user_id }}">Transactions</a></li>
+            <li><a href="/profile?user_id={{ user_id }}">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <form id="search-form">
+          <input type="text" id="search" name="search" placeholder="Search for products" required />
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <!-- Hero Section -->
+
+      <div class="row">
+        <div class="col-2">
+          <h1>Upgrade Your <br /> Online Shopping Journey !</h1>
+          <p>
+           Shopping isn't just about finding products. It's about consistency. <br /> Consistently exploring leads to great discoveries. Perfection will come.
+          </p>
+
+          <a href="#" class="expBtn">Explore Now &#8594;</a>
+        </div>
+
+        <div class="col-2">
+          <img src="../static/img/hero_sec.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Section -->
+  <div class="categories">
+    <div class="small-container">
+      <h2 class="heading"> Feature Products</h2>
+      <div class="row">
+        <div class="col-3">
+          <img src="../static/img/c1.jpg" alt="">
+        </div>
+
+        <div class="col-3">
+          <img src="../static/img/c2.jpg" alt="">
+        </div>
+
+        <div class="col-3">
+          <img src="../static/img/c3.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details Section -->
+  <div class="product-container" id="product_details">
+    <h1 class="heading" id="product-list">Product Details</h1>
+    {% if products %}
+    <div class="product">
+      {% for product in products %}
+      <div class="product-card">
+        <h2>{{ product.name }}</h2>
+        <p class="product-description">{{ product.description }}</p>
+        <p class="product-price">Price: ${{ product.price }}</p>
+        <div class="button-container">
+          <button class="buy-button" data-product-id="{{ product._id }}">
+            Buy
+          </button>
+          <button class="cart-button" data-product-id="{{ product._id }}">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="error-message">Product not found</p>
+    {% endif %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <hr class="footer-line" />
+      <p>Made with ❤️ Pranay Bhandekar © 2024 Red Store</p>
+    </div>
+  </footer>
+</body>
+
+</html>

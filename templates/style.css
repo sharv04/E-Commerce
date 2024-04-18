@@ -1,0 +1,278 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Product card styles */
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.product-card .product-description {
+  margin-bottom: 10px;
+}
+
+.product-card .product-price {
+  font-weight: bold;
+}
+
+/* Button container styles */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Buy button styles */
+.buy-button {
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy-button:hover {
+  background-color: #218838;
+}
+
+/* Add to cart button styles */
+.cart-button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cart-button:hover {
+  background-color: #0056b3;
+}
+
+/* Error message styles */
+.error-message {
+  text-align: center;
+  color: #dc3545;
+  margin-top: 20px;
+}
+
+/* Heading styles */
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Cart products container styles */
+#cart-products {
+  margin-top: 20px;
+}
+
+/* Message when there are no products in cart */
+#cart-products .no-products-message {
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Product details styles */
+#product-details {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+/* Horizontal rule styles */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+#cart-products {
+  margin-top: 20px;
+}
+
+/* Styling for the product card */
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.product-card .product-description {
+  margin-bottom: 15px;
+}
+
+.product-card .product-price {
+  font-weight: bold;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Styling for the total amount */
+.total-amount {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Styling for the checkout button */
+.checkout-button {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+  background-color: #0056b3;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.transaction {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.transaction h3 {
+  margin-top: 0;
+}
+.transaction p {
+  margin: 5px 0;
+}
+.transaction .products {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+.product {
+  margin-bottom: 5px;
+}
+.transaction {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.transaction h3 {
+  color: #333;
+}
+.product {
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-top: 5px;
+}
+.product p {
+  margin: 5px 0;
+}
+/* CSS Styles */
+#profile {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+  max-width: 400px;
+}
+
+.profile-info {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-info h2 {
+  color: #333;
+}
+
+.profile-info p {
+  margin: 5px 0;
+}
